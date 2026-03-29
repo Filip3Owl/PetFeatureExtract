@@ -1,4 +1,17 @@
-tensorflow
-pandas
-numpy
-matplotlib
+# ==========================================
+# PROJETO LENET-5 - CLASSIFICAÇÃO DE IMAGENS
+# ==========================================
+
+# Deep Learning & Redes Neurais
+tensorflow>=2.10.0
+
+# Manipulação de Dados e Arrays
+numpy>=1.23.0
+pandas>=2.0.0
+
+# Processamento de Imagens e Visualização
+Pillow>=9.5.0
+matplotlib>=3.7.0
+
+# Utilitários (Opcional, mas altamente recomendado)
+scikit-learn>=1.2.0

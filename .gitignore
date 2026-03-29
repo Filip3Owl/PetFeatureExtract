@@ -1,2 +1,52 @@
-.venv
-data
+# =========================
+# AMBIENTE VIRTUAL
+# =========================
+# Ignora a pasta do seu ambiente virtual mostrada na imagem
+.venv/
+venv/
+env/
+
+# =========================
+# DADOS / IMAGENS
+# =========================
+# Ignora o dataset (imagens de cães e gatos) para não sobrecarregar o Git
+data/
+*.jpg
+*.jpeg
+*.png
+
+# =========================
+# MODELOS TREINADOS
+# =========================
+# Ignora pesos e modelos salvos após o treinamento da LeNet-5
+*.pt
+*.pth
+*.h5
+*.hdf5
+*.ckpt
+*.weights
+*.onnx
+
+# =========================
+# CACHE DO PYTHON
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# =========================
+# IDEs E SISTEMA OPERACIONAL
+# =========================
+# Ignora configurações do VS Code (parece ser o que você está usando)
+.vscode/
+.idea/
+
+# Arquivos de sistema (Windows / macOS)
+Thumbs.db
+.DS_Store
+
+# =========================
+# NOTEBOOKS (Se for usar)
+# =========================
+.ipynb_checkpoints/
