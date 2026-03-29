@@ -1,70 +1,84 @@
-# Dog and Cat Classification with LeNet-5
+# LeNet-5 Pet Image Classifier: Dogs vs. Cats
 
-This repository contains a Python implementation of a Convolutional Neural Network (CNN) based on the **LeNet-5** architecture, adapted for binary classification of dogs and cats. The project demonstrates the application of classical deep learning architectures to modern image datasets.
+## Overview
+This project implements a Convolutional Neural Network (CNN) to classify images of dogs and cats. It utilizes a modernized version of the classic **LeNet-5 architecture** adapted for RGB images. The pipeline includes an automated data preprocessing module designed to detect and remove corrupted image files before training, ensuring pipeline stability and model reliability.
 
-## Project Overview
+Built with **TensorFlow/Keras**, this repository serves as a practical implementation of computer vision fundamentals, data engineering best practices, and model optimization techniques such as dynamic learning rate callbacks and dataset caching.
 
-The core objective is to adapt the original LeNet-5—initially designed for grayscale 32x32 digit recognition—to process 3-channel (RGB) images of pets. Modifications include adjustments to the input layer dimensions, the use of Max Pooling for better feature extraction in natural images, and a sigmoid output layer for binary classification.
+## Project Structure
 
-## Dataset
-
-The model is trained using the [Dog and Cat Classification Dataset](https://www.kaggle.com/datasets/bhavikjikadara/dog-and-cat-classification-dataset). 
-
-### Directory Structure
-The project expects the following directory hierarchy:
 ```text
-.
+LENET/
+│
+├── .venv/                     # Python Virtual Environment
 ├── data/
-│   └── PetImages/
-│       ├── Cat/
-│       └── Dog/
+│   └── PetImages/             # Dataset directory
+│       ├── Cat/               # Class 0: Cat images
+│       └── Dog/               # Class 1: Dog images
+│
 ├── model/
-│   └── train_lenet5.py
-├── requirements.txt
-└── README.md
+│   ├── train_lenet5.py        # Main training and data cleaning script
+│   └── lenet5_cats_dogs.h5    # Saved model weights (generated after training)
+│
+├── .gitignore                 # Specifies intentionally untracked files to ignore
+├── README.md                  # Project documentation
+└── requirements.txt           # Python dependencies
 ```
 
-## Dependencies
+## Prerequisites
+* **Python 3.8+**
+* Virtual Environment (recommended)
 
-The following libraries are required to execute the training script:
-* **TensorFlow 2.x**: Deep learning framework and Keras API.
-* **NumPy**: Numerical operations.
-* **Matplotlib**: Data visualization and training history plotting.
+## Dataset Setup
+This project expects a dataset structured into two main classes: `Cat` and `Dog`. 
+1. Download a dataset (such as the Microsoft Kaggle Cats and Dogs Dataset).
+2. Extract the images and place them in the corresponding folders under `data/PetImages/Cat` and `data/PetImages/Dog`.
 
-Installation command:
+## Getting Started
+
+### 1. Set Up the Virtual Environment
+If you haven't already activated your virtual environment, do so using the following commands:
+
+**Windows:**
 ```bash
-pip install tensorflow numpy matplotlib
+.venv\Scripts\activate
 ```
 
-## Architecture Details
+**macOS/Linux:**
+```bash
+source .venv/bin/activate
+```
 
-The implemented model follows these stages:
-1.  **Input Layer**: 64x64x3 RGB images.
-2.  **Convolutional Layer (C1)**: 6 filters, 5x5 kernel, ReLU activation.
-3.  **Max Pooling (S2)**: 2x2 pool size.
-4.  **Convolutional Layer (C3)**: 16 filters, 5x5 kernel, ReLU activation.
-5.  **Max Pooling (S4)**: 2x2 pool size.
-6.  **Flattening Layer**: Converts 2D feature maps to 1D vectors.
-7.  **Fully Connected (F5)**: 120 neurons, ReLU activation.
-8.  **Fully Connected (F6)**: 84 neurons, ReLU activation.
-9.  **Output Layer**: 1 neuron, Sigmoid activation.
+### 2. Install Dependencies
+Install the required packages using the `requirements.txt` file:
+```bash
+pip install -r requirements.txt
+```
+*(Dependencies include `tensorflow`, `Pillow`, and `matplotlib`)*
 
 ## Usage
 
-### Data Cleaning
-Due to the presence of corrupted or non-JPEG files in the original dataset, a cleaning routine is included in the script to remove invalid images before training begins.
-
 ### Training the Model
-To start the training process, ensure your environment is active and run:
+To start the data cleaning process and train the LeNet-5 model, execute the main script from the root directory:
+
 ```bash
 python model/train_lenet5.py
 ```
 
-## Implementation Notes
+**What the script does under the hood:**
+1. **Data Cleaning:** Scans the dataset directories and permanently deletes corrupted or unreadable image files using `Pillow`.
+2. **Data Loading:** Splits the dataset into Training (80%) and Validation (20%) sets.
+3. **Preprocessing:** Normalizes pixel values from `[0, 255]` to `[0, 1]` and optimizes data loading using TensorFlow's `cache` and `prefetch`.
+4. **Training:** Trains the LeNet-5 model with an `EarlyStopping` callback to prevent overfitting.
+5. **Saving:** Exports the trained model to `model/lenet5_cats_dogs.h5` for future inference.
 
-* **Pre-processing**: Images are rescaled to a [0, 1] range using a `Rescaling` layer.
-* **Validation**: 20% of the training data is reserved for validation to monitor for overfitting.
-* **Optimization**: The model uses the Adam optimizer and Binary Crossentropy loss function.
+## Model Architecture (Modernized LeNet-5)
+The original LeNet-5 was designed for 32x32 grayscale images using `Tanh` activations and Average Pooling. This implementation modernizes the architecture to better handle complex features:
+* **Input Shape:** 32x32x3 (RGB Images)
+* **Activations:** `ReLU` (Rectified Linear Unit) for hidden layers to mitigate the vanishing gradient problem.
+* **Pooling:** `MaxPooling2D` to extract the most prominent features.
+* **Output:** A single dense node with a `Sigmoid` activation for binary classification (0 = Cat, 1 = Dog).
 
 ## License
-This project is for educational purposes. Please refer to the original dataset provider for licensing regarding the image data.
+Distributed under the MIT License.
+```
